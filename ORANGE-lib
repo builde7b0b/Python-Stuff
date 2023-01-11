@@ -1,0 +1,180 @@
+# ORANGE - Python Library #
+###########################
+http://orange.biolab.si/docs/latest/tutorial/rst/index.html
+
+
+############
+# TUTORIALS
+###########
+
+# Getting Started
+
+# Import Orange
+% python
+>> import Orange
+>>> Orange.version.version
+>>>
+
+
+
+# CONTENTS
+The data
+Classification
+Regression
+Ensenbles
+Learners in Python
+
+
+
+# CONTENTS - INSIDE
+The data
+    Data Input
+    Saving the data
+    Exploration of Data Domain
+    Data instances
+    Missing Values
+    Data subsetting
+    
+Classification
+    Learners and Classifiers
+    Probabilistic Classification
+    Cross-Validation
+    handful of classifiers
+    Reporting on Classification Models
+
+Regression
+    Handful of Regressors
+    Cross Validation
+    
+Ensenbles
+    Bagging and Boosting
+    Stacking
+    Random Forests
+    
+Learners in Python
+    Classifier with Feature Selection
+    Estimation of Feature Set Size
+    
+    
+
+
+
+
+
+
+
+# OTHER LINKS
+http://www.jetbrains.com/pycharm/
+http://wiki.python.org/moin/PythonWin
+http://orange.biolab.si/download/
+http://ipython.scipy.org/moin/
+http://www.python.org/
+
+# orange scripting reference
+http://docs.orange.biolab.si/reference/rst/index.html
+
+
+
+
+
+
+
+# THE DATA #
+###############
+how to load and save dat.
+Explore data, domain description, reporting on basic data set statistics and how to sample the data.
+
+
+
+# Data input
+Orange can read files in native and other data formats.
+
+Native format starts with feature(attribute) names, their type(continuos, discrete, string).
+
+The third line contains meta information to identify dependent features(class), irrelevant features(ignore) or meta features(meta).
+
+here are the first few lines from a data set lenses.tab on prescription of eye lenses.
+
+
+
+Values are tab-limited.
+
+The data set has four attributes(age of the patient, spectacle prescription, notion on astimatism, and informaiton on tear production rate) and an asociated three-valued dependent variable encoding lens prescription for the patient(hard contact lenses, soft contact lenses, no lenses).
+
+Feature descriptions coud use one letter only, so the header of this data set could also read:
+
+
+The rest of the table gives the data.
+
+note that there are 5 instances in our table above(check the original file to see other).
+
+orange is rather free in what attribute value names it uses, so they do not need all ot start with a letter like in our example.
+
+
+You may download lenses.tab to a target directory and there open a python shell.
+
+Alternatively, just execute the code below: this particular data set comes with orange installation and orange knows where to find it:
+>>> import Orange
+>>> data = Orange.data.Table("lenses")
+>>>
+
+
+Note that for the file name no suffix is needed; as Orange checks if any files in the current directory are of the readable type.
+
+The call to Orange.data.Table creates an object called data that holds your data set and information about the lenses domain.
+
+>>> print data.domain.features
+
+>>> print data.domain.class_var
+
+>>> for d in data[:3]:
+print d
+
+
+
+The following script wraps-up everything we have done so far and lists first 5 data instances with soft prescription:
+
+import Orange
+data = Orange.data.Table("lenses")
+print "Attributes:", ", ".join(x.name for x in data.domain.features
+print "Class:", data.domain.class_var.name
+print "Data instances", len(data)
+target = "soft"
+print "Data instances with %s prescriptions:" % target
+
+for d in data:
+    if d.get_class() == target:
+        print " ".join(["%-15s"  str(v) for v in d])
+
+
+NOTE:
+data is an object that holds both the data and information on the doomain.
+We show above how to access attribute and class names, but there is much more information there, including that on feature type, set of values for categorical features and other.
+
+
+# SAVING THE DATA
+Data objects can be saved to a file:
+
+>>> data.save("new_data.tab")
+>>>
+
+this time, we have to provide the extension for Orange to know which data format to use.
+
+An extension for native Orange data format is *tab*.
+
+The following code saves only the data items with mope perscription.
+
+import Orange
+data = Orange.data.Table("lenses")
+print "N1=%d" % len(data)
+new_data = Orange.data.Table([d for d in data if d["prescription"]=="myope"])
+print "N2=%d" %len(new_data)
+new_data.save("lenses-subset: tab")
+
+
+# EXPLORATION OF DATA DOMAIN
+
+
+
+
+
